@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,6 +36,8 @@ public class Register extends AppCompatActivity {
                 if(password.equals(password2)) {
                     myRef.child(userId).child("username").setValue(auser);
                     myRef.child(userId).child("password").setValue(password);
+                    Toast.makeText(Register.this, "User "+auser+" was successfully added",Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 else
                     System.out.println("---------------------------------Not ok-------------------------------------------");

@@ -1,24 +1,38 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public void openNewActivity(){
+
+
+    public void openRegisterActivity() {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
 
+    public void openWelcomeActivity(Intent i) {
+        startActivity(i);
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -27,12 +41,34 @@ public class MainActivity extends AppCompatActivity {
         final String userId = myRef.push().getKey();
         Button registerBtn = findViewById(R.id.registerBtn);
         Button loginBtn = findViewById(R.id.loginBtn);
+        final ArrayList<User> users = new ArrayList<>();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                try {
+                    users.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String username = ds.child("username").getValue(String.class);
+                        String password = ds.child("password").getValue(String.class);
+                        User user = new User(username, password);
+                        users.add(user);
+//                        Log.d("TAG", username);
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewActivity();
-                //setContentView(R.layout.activity_register);
+                openRegisterActivity();
+
             }
         });
 
@@ -44,8 +80,20 @@ public class MainActivity extends AppCompatActivity {
                 String auser = user.getText().toString();
                 EditText pass = findViewById(R.id.passwd);
                 String password = pass.getText().toString();
-                myRef.child(userId).child("username").setValue(auser);
-                myRef.child(userId).child("password").setValue(password);
+                boolean found = false;
+                String username = "";
+                for (User user1 : users)
+                    if (user1.getUsername().equals(auser) && user1.getPassword().equals(password)) {
+                        username = user1.getUsername();
+                        found = true;
+                        break;
+                    }
+                if (found) {
+                    Intent i = new Intent(getBaseContext(), WelcomePage.class);
+                    i.putExtra("USER_NAME", username);
+                    openWelcomeActivity(i);
+                } else
+                    Toast.makeText(MainActivity.this, "Wrong login credentials", Toast.LENGTH_SHORT).show();
             }
         });
     }

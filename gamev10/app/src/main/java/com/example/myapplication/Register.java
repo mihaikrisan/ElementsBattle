@@ -67,20 +67,27 @@ public class Register extends AppCompatActivity {
                 EditText passwd2 = findViewById(R.id.password2);
                 String password2 = passwd2.getText().toString();
                 if (password.equals(password2)) {
-                    boolean found = false;
-                    for (User user1 : users)
-                        if (user1.getUsername().equals(auser)) {
-                            found = true;
-                            break;
+
+                    boolean checkUser = auser.matches("[a-zA-Z0-9]{6,20}");
+                    boolean checkPass = password.matches("[a-zA-Z0-9]{6,20}");
+                    if (checkUser && checkPass) {
+                        boolean found = false;
+                        for (User user1 : users)
+                            if (user1.getUsername().equals(auser)) {
+                                found = true;
+                                break;
+                            }
+                        if (found)
+                            Toast.makeText(Register.this, "Username " + auser + " is already taken!", Toast.LENGTH_SHORT).show();
+                        else {
+                            myRef.child(userId).child("username").setValue(auser);
+                            myRef.child(userId).child("password").setValue(password);
+                            Toast.makeText(Register.this, "User " + auser + " was successfully added", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
-                    if (found)
-                        Toast.makeText(Register.this, "Username " + auser + " is already taken!", Toast.LENGTH_SHORT).show();
-                    else {
-                        myRef.child(userId).child("username").setValue(auser);
-                        myRef.child(userId).child("password").setValue(password);
-                        Toast.makeText(Register.this, "User " + auser + " was successfully added", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
+                    } else
+                        Toast.makeText(Register.this, "Username and passworrd should have between 6 and 20 alfanumeric chars!", Toast.LENGTH_SHORT).show();
+
                 } else
                     Toast.makeText(Register.this, "Different passwords", Toast.LENGTH_SHORT).show();
 

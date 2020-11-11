@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -30,11 +33,12 @@ public class WelcomePage extends AppCompatActivity {
 
         first_card = findViewById(R.id.first_card);
 
-// Download directly from StorageReference using Glide
-// (See MyAppGlideModule for Loader registration)
+        StorageReference pathReference = storageReference.child("CardImages/BasicCardSprite.jpeg");
+
         Glide.with(this /* context */)
-                .load(storageReference)
-                .into(imageView);
+                .using(new FirebaseImageLoader())
+                .load(pathReference)
+                .into(first_card);
     }
 
 }

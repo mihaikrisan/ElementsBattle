@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAuth firebaseAuth;
 
 
     public void openRegisterActivity() {
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         Button registerBtn = findViewById(R.id.registerBtn);
         Button loginBtn = findViewById(R.id.loginBtn);
         final ArrayList<User> users = new ArrayList<>();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signInWithEmailAndPassword("iorgandadominic@gmail.com", "Laejudoka33");
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {

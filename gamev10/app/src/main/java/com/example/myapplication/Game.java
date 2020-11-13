@@ -16,6 +16,10 @@ import java.util.Random;
 
 
 public class Game extends AppCompatActivity {
+    private int computerScore;
+    private int playerScore;
+    private TextView computerScoreView;
+    private TextView playerScoreView;
 
     public int getRandomNumber() {
         Random random = new Random();
@@ -69,16 +73,41 @@ public class Game extends AppCompatActivity {
         return playerCards;
     }
 
-    public void changeScore(ImageView playerCard, ArrayList<Karten> playerAssignedCards, ArrayList<ImageView> playerCards) {
-        for (int i = 0; i < playerCards.size(); i++) {
+    public int changeScore(ImageView playerCard, Karten computerChosenCard, ArrayList<Karten> playerAssignedCards, ArrayList<ImageView> playerCards) {
+        int i;
+        for (i = 0; i < playerCards.size(); i++) {
             String s1 = playerCard.getDrawable().toString();
             String s2 = playerCards.get(i).getDrawable().toString();
-            if (s1.equals(s2))
-                System.out.println(i);
-            System.out.println(s1 + "     ==     " + s2);
+            if (s1.equals(s2)) {
+                System.out.println(computerChosenCard.getPath());
+                System.out.println(playerAssignedCards.get(i).getPath());
+                if (computerChosenCard.getPath().equals(playerAssignedCards.get(i).getPath())) {
+                    Toast.makeText(Game.this, "DRAW", Toast.LENGTH_SHORT).show();
+                    return i;
+                }
+                boolean playerWin = compareCards(computerChosenCard, playerAssignedCards.get(i));
+                System.out.println(playerWin);
+                if (playerWin)
+                    playerScore++;
+                else
+                    computerScore++;
+                break;
+            }
 
         }
+        computerScoreView.setText("" +computerScore);
+        playerScoreView.setText("" +playerScore);
+        return i;
+    }
 
+    public boolean compareCards(Karten computerChosenCard, Karten playerChosenCard) {
+        if (computerChosenCard.getType().equals(playerChosenCard.getType()))
+            return computerChosenCard.getPower() < playerChosenCard.getPower();
+        if (playerChosenCard.getType().equals("Fire"))
+            return computerChosenCard.getType().equals("Grass");
+        if (playerChosenCard.getType().equals("Grass"))
+            return computerChosenCard.getType().equals("Water");
+        return computerChosenCard.getType().equals("Fire");
     }
 
     @Override
@@ -88,11 +117,11 @@ public class Game extends AppCompatActivity {
 
         final ImageView chosenCard = findViewById(R.id.activePlayerCard);
         final ImageView computerCard = findViewById(R.id.activeComputerCard);
-        TextView computerScoreView = findViewById(R.id.scoreComputer);
-        TextView playerScoreView = findViewById(R.id.scorePlayer);
+        computerScoreView = findViewById(R.id.scoreComputer);
+        playerScoreView = findViewById(R.id.scorePlayer);
 
-        int computerScore = Integer.parseInt(computerScoreView.getText().toString());
-        int playerScore = Integer.parseInt(computerScoreView.getText().toString());
+        computerScore = Integer.parseInt(computerScoreView.getText().toString());
+        playerScore = Integer.parseInt(playerScoreView.getText().toString());
 
         final ArrayList<ImageView> playerCards = getPlayerDeck();
         final ArrayList<Karten> playerAssignedCards = new ArrayList<>();
@@ -108,9 +137,12 @@ public class Game extends AppCompatActivity {
                 public void onClick(View v) {
                     //System.out.println(card.getDrawable());
                     chosenCard.setImageDrawable(card.getDrawable());
-                    setCardImage(computerCard);
-                    changeScore(chosenCard, playerAssignedCards, playerCards);
-                    setCardImage(card);
+                    Karten computerChosenCard = setCardImage(computerCard);
+                    int chosenPosition = changeScore(chosenCard, computerChosenCard, playerAssignedCards, playerCards);
+                    Karten newDrawnCard = setCardImage(card);
+                    playerAssignedCards.remove(chosenPosition);
+                    playerAssignedCards.add(chosenPosition, newDrawnCard);
+
 
                 }
             });

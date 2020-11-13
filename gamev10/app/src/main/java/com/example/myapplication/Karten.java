@@ -9,7 +9,16 @@ public enum Karten {
     Gorilla(12,"Grass","gorilla12.jpg"),
     Penguin(6,"Water","penguin6.jpg"),
     Shark(12,"Water","rechin12.jpg"),
-    Tiger(10,"Grass","tiger10.jpg");
+    Tiger(10,"Grass","tiger10.jpg"),
+    Cinder(8,"Fire","cinder8.jpg"),
+    Crocodile(9,"Grass","crocodile9.jpg"),
+    Fish(7,"Water","fish7.jpg"),
+    Hydra(11,"Water","hydra11.jpg"),
+    Kraken(9,"Water","kraken9.jpg"),
+    Mamut(9,"Grass","mamut9.jpg"),
+    Phoenix(11,"Fire","phoenix11.jpg"),
+    Snake(11,"Grass","snake11.jpg"),
+    Apocalypse(7,"Fire","apocalypse7.jpg");
 
     private int power;
     private String type;

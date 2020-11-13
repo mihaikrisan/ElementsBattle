@@ -23,7 +23,7 @@ public class Game extends AppCompatActivity {
 
     public int getRandomNumber() {
         Random random = new Random();
-        return random.nextInt(9);
+        return random.nextInt(18);
     }
 
     public Karten setCardImage(ImageView image) {
@@ -56,6 +56,33 @@ public class Game extends AppCompatActivity {
                 break;
             case "tiger10.jpg":
                 image.setImageResource(R.drawable.tiger10);
+                break;
+            case "apocalypse7.jpg":
+                image.setImageResource(R.drawable.apocalypse7);
+                break;
+            case "cinder8.jpg":
+                image.setImageResource(R.drawable.cinder8);
+                break;
+            case "crocodile9.jpg":
+                image.setImageResource(R.drawable.crocodile9);
+                break;
+            case "fish7.jpg":
+                image.setImageResource(R.drawable.fish7);
+                break;
+            case "hydra11.jpg":
+                image.setImageResource(R.drawable.hydra11);
+                break;
+            case "kraken9.jpg":
+                image.setImageResource(R.drawable.kraken9);
+                break;
+            case "mamut9.jpg":
+                image.setImageResource(R.drawable.mamut9);
+                break;
+            case "phoenix11.jpg":
+                image.setImageResource(R.drawable.phoenix11);
+                break;
+            case "snake11.jpg":
+                image.setImageResource(R.drawable.snake11);
                 break;
         }
         return card;

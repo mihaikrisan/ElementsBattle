@@ -80,14 +80,19 @@ public class MainActivity extends AppCompatActivity {
                 String auser = user.getText().toString();
                 EditText pass = findViewById(R.id.passwd);
                 String password = pass.getText().toString();
+
+                MD5 md5Hasher = new MD5(password);
+                String hashedPasswd = md5Hasher.getMD5();
+
                 boolean found = false;
                 String username = "";
-                for (User user1 : users)
-                    if (user1.getUsername().equals(auser) && user1.getPassword().equals(password)) {
+                for (User user1 : users) {
+                    if (user1.getUsername().equals(auser) && user1.getPassword().equals(hashedPasswd)) {
                         username = user1.getUsername();
                         found = true;
                         break;
                     }
+                }
                 if (found) {
                     Intent i = new Intent(getBaseContext(), WelcomePage.class);
                     i.putExtra("USER_NAME", username);

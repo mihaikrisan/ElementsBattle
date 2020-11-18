@@ -28,6 +28,8 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
+
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("User");
         final String userId = myRef.push().getKey();
@@ -66,6 +68,10 @@ public class Register extends AppCompatActivity {
                 String password = passwd.getText().toString();
                 EditText passwd2 = findViewById(R.id.password2);
                 String password2 = passwd2.getText().toString();
+
+                MD5 md5Hasher = new MD5(password);
+                String hashedPasswd = md5Hasher.getMD5();
+
                 if (password.equals(password2)) {
 
                     boolean checkUser = auser.matches("[a-zA-Z0-9]{6,20}");
@@ -81,7 +87,7 @@ public class Register extends AppCompatActivity {
                             Toast.makeText(Register.this, "Username " + auser + " is already taken!", Toast.LENGTH_SHORT).show();
                         else {
                             myRef.child(userId).child("username").setValue(auser);
-                            myRef.child(userId).child("password").setValue(password);
+                            myRef.child(userId).child("password").setValue(hashedPasswd);
                             Toast.makeText(Register.this, "User " + auser + " was successfully added", Toast.LENGTH_SHORT).show();
                             finish();
                         }

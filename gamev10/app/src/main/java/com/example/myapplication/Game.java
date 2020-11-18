@@ -106,14 +106,14 @@ public class Game extends AppCompatActivity {
             String s1 = playerCard.getDrawable().toString();
             String s2 = playerCards.get(i).getDrawable().toString();
             if (s1.equals(s2)) {
-                System.out.println(computerChosenCard.getPath());
-                System.out.println(playerAssignedCards.get(i).getPath());
+//                System.out.println(computerChosenCard.getPath());
+//                System.out.println(playerAssignedCards.get(i).getPath());
                 if (computerChosenCard.getPath().equals(playerAssignedCards.get(i).getPath())) {
                     Toast.makeText(Game.this, "DRAW", Toast.LENGTH_SHORT).show();
                     return i;
                 }
                 boolean playerWin = compareCards(computerChosenCard, playerAssignedCards.get(i));
-                System.out.println(playerWin);
+//                System.out.println(playerWin);
                 if (playerWin)
                     playerScore++;
                 else

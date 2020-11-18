@@ -33,8 +33,8 @@ public class Game extends AppCompatActivity {
             case "cerberus10.jpg":
                 image.setImageResource(R.drawable.cerberus10);
                 break;
-            case "charmander7.jpg":
-                image.setImageResource(R.drawable.charmander7);
+            case "charmander6.jpg":
+                image.setImageResource(R.drawable.charmander6);
                 break;
             case "deathwing12.jpg":
                 image.setImageResource(R.drawable.deathwing12);
@@ -122,8 +122,8 @@ public class Game extends AppCompatActivity {
             }
 
         }
-        computerScoreView.setText("" +computerScore);
-        playerScoreView.setText("" +playerScore);
+        computerScoreView.setText("" + computerScore);
+        playerScoreView.setText("" + playerScore);
         return i;
     }
 

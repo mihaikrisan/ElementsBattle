@@ -50,7 +50,10 @@ public class MainActivity extends AppCompatActivity {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String username = ds.child("username").getValue(String.class);
                         String password = ds.child("password").getValue(String.class);
-                        User user = new User(username, password);
+                        Integer nrWins = ds.child("nr_wins").getValue(Integer.class);
+                        Integer nrLosses = ds.child("nr_losses").getValue(Integer.class);
+                        Integer totalTime = ds.child("total_time").getValue(Integer.class);
+                        User user = new User(username, password, nrWins, nrLosses, totalTime);
                         users.add(user);
 //                        Log.d("TAG", username);
                     }

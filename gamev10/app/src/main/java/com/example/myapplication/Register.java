@@ -29,7 +29,6 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("User");
         final String userId = myRef.push().getKey();
@@ -42,7 +41,10 @@ public class Register extends AppCompatActivity {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String username = ds.child("username").getValue(String.class);
                         String password = ds.child("password").getValue(String.class);
-                        User user = new User(username, password);
+                        Integer nrWins = ds.child("nr_wins").getValue(Integer.class);
+                        Integer nrLosses = ds.child("nr_losses").getValue(Integer.class);
+                        Integer totalTime = ds.child("total_time").getValue(Integer.class);
+                        User user = new User(username, password, nrWins, nrLosses, totalTime);
                         users.add(user);
 //                        Log.d("TAG", username);
                     }
@@ -88,6 +90,9 @@ public class Register extends AppCompatActivity {
                         else {
                             myRef.child(userId).child("username").setValue(auser);
                             myRef.child(userId).child("password").setValue(hashedPasswd);
+                            myRef.child(userId).child("nr_losses").setValue(0);
+                            myRef.child(userId).child("nr_wins").setValue(0);
+                            myRef.child(userId).child("total_time").setValue(0);
                             Toast.makeText(Register.this, "User " + auser + " was successfully added", Toast.LENGTH_SHORT).show();
                             finish();
                         }

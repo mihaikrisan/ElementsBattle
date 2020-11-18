@@ -21,6 +21,10 @@ public class WelcomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openProfileActivity(Intent i) {
+        startActivity(i);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +32,7 @@ public class WelcomePage extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra("USER_NAME");
+        final String username = intent.getStringExtra("USER_NAME");
         Toast.makeText(WelcomePage.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
 
         Button startBtn = findViewById(R.id.startBtn);
@@ -39,5 +43,14 @@ public class WelcomePage extends AppCompatActivity {
             }
         });
 
+        Button profileBtn = findViewById(R.id.profileBtn);
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), ProfileActivity.class);
+                i.putExtra("USER_NAME", username);
+                openProfileActivity(i);
+            }
+        });
     }
 }

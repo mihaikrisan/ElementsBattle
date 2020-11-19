@@ -7,22 +7,21 @@
 
     <Button
         android:id="@+id/startBtn"
-        android:layout_width="177dp"
-        android:layout_height="62dp"
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="122dp"
+        android:layout_marginStart="123dp"
         android:layout_marginTop="86dp"
-        android:layout_marginEnd="110dp"
-        android:layout_marginBottom="583dp"
+        android:layout_marginEnd="109dp"
+
         android:text="Start Game" />
 
     <Button
         android:id="@+id/profileBtn"
-        android:layout_width="177dp"
-        android:layout_height="62dp"
+        android:layout_width="175dp"
+        android:layout_height="65dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -33,31 +32,28 @@
 
     <Button
         android:id="@+id/shuffleBtn"
-        android:layout_width="163dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="130dp"
+        android:layout_marginStart="123dp"
         android:layout_marginTop="263dp"
-        android:layout_marginEnd="118dp"
-        android:layout_marginBottom="414dp"
+        android:layout_marginEnd="109dp"
         android:text="shuffle music" />
 
     <Switch
         android:id="@+id/soundSwitch"
-        android:layout_width="177dp"
+        android:layout_width="wrap_content"
         android:layout_height="62dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="121dp"
+        android:layout_marginStart="123dp"
         android:layout_marginTop="347dp"
-        android:layout_marginEnd="112dp"
-        android:layout_marginBottom="322dp"
+        android:layout_marginEnd="109dp"
         android:checked="true"
+        android:textAlignment="center"
         android:text="Sound" />
 
 </RelativeLayout>

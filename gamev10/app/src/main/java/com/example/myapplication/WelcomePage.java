@@ -30,7 +30,7 @@ public class WelcomePage extends AppCompatActivity {
 
     public int getRandomNumber() {
         Random random = new Random();
-        return random.nextInt(7);
+        return random.nextInt(8);
     }
 
     public boolean isPlaying = false;

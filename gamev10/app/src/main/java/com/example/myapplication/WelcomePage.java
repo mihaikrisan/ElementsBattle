@@ -89,7 +89,7 @@ public class WelcomePage extends AppCompatActivity {
         if(isPlaying)
             mySong.reset();
         isPlaying = false;
-
+        soundOn = true;
         String name = "song" + getRandomNumber();
         int resource = getResources().getIdentifier(name, "raw", "com.example.myapplication");
         mySong = MediaPlayer.create(WelcomePage.this, resource);
@@ -110,8 +110,8 @@ public class WelcomePage extends AppCompatActivity {
         playSong();
 
         Button startBtn = findViewById(R.id.startBtn);
-        Switch soundSwitch = findViewById(R.id.soundSwitch);
-        Button shuffleBtn = findViewById(R.id.shuffleBtn);
+        final Switch soundSwitch = findViewById(R.id.soundSwitch);
+        final Button shuffleBtn = findViewById(R.id.shuffleBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +122,7 @@ public class WelcomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playSong();
+                soundSwitch.setChecked(true);
             }
         });
         soundSwitch.setOnClickListener(new View.OnClickListener() {

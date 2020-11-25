@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.io.File;
@@ -20,6 +21,7 @@ import java.util.Random;
 
 public class WelcomePage extends AppCompatActivity {
     MediaPlayer mySong;
+    boolean soundOn = true;
 
     public void openGameActivity() {
         Intent intent = new Intent(this, Game.class);
@@ -28,10 +30,11 @@ public class WelcomePage extends AppCompatActivity {
 
     public int getRandomNumber() {
         Random random = new Random();
-        return random.nextInt(7);
+        return random.nextInt(8);
     }
 
     public boolean isPlaying = false;
+
     private void startMusic(){
         if(!isPlaying) {
             try {
@@ -69,6 +72,32 @@ public class WelcomePage extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void toggleSound(){
+        if(soundOn) {
+            mySong.pause();
+            soundOn = false;
+        }
+        else {
+            mySong.start();
+            soundOn = true;
+        }
+
+    }
+
+
+    public void playSong(){
+        if(isPlaying)
+            mySong.reset();
+        isPlaying = false;
+
+        String name = "song" + getRandomNumber();
+        int resource = getResources().getIdentifier(name, "raw", "com.example.myapplication");
+        mySong = MediaPlayer.create(WelcomePage.this, resource);
+        mySong.start();
+        System.out.println(name);
+        startMusic();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,19 +107,27 @@ public class WelcomePage extends AppCompatActivity {
         final String username = intent.getStringExtra("USER_NAME");
         Toast.makeText(WelcomePage.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
 
-        String name = "song" + getRandomNumber();
-        int resource = getResources().getIdentifier(name, "raw", "com.example.myapplication");
-        mySong = MediaPlayer.create(WelcomePage.this, resource);
-        mySong.start();
-        System.out.println(name);
-        startMusic();
-
+        playSong();
 
         Button startBtn = findViewById(R.id.startBtn);
+        Switch soundSwitch = findViewById(R.id.soundSwitch);
+        Button shuffleBtn = findViewById(R.id.shuffleBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGameActivity();
+            }
+        });
+        shuffleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playSong();
+            }
+        });
+        soundSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleSound();
             }
         });
 

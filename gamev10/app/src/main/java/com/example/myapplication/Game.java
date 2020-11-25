@@ -1,15 +1,14 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.os.CountDownTimer;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,10 +19,20 @@ public class Game extends AppCompatActivity {
     private int playerScore;
     private TextView computerScoreView;
     private TextView playerScoreView;
+    public int counter;
 
     public int getRandomNumber() {
         Random random = new Random();
         return random.nextInt(18);
+    }
+
+    public void openWinActivity() {
+        Intent intent = new Intent(this, WinActivity.class);
+        startActivity(intent);
+    }
+    public void openLoseActivity() {
+        Intent intent = new Intent(this, LoseActivity.class);
+        startActivity(intent);
     }
 
     public Karten setCardImage(ImageView image) {
@@ -137,6 +146,8 @@ public class Game extends AppCompatActivity {
         return computerChosenCard.getType().equals("Fire");
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +157,7 @@ public class Game extends AppCompatActivity {
         final ImageView computerCard = findViewById(R.id.activeComputerCard);
         computerScoreView = findViewById(R.id.scoreComputer);
         playerScoreView = findViewById(R.id.scorePlayer);
+        final TextView textView = findViewById(R.id.score);
 
         computerScore = Integer.parseInt(computerScoreView.getText().toString());
         playerScore = Integer.parseInt(playerScoreView.getText().toString());
@@ -170,9 +182,29 @@ public class Game extends AppCompatActivity {
                     playerAssignedCards.remove(chosenPosition);
                     playerAssignedCards.add(chosenPosition, newDrawnCard);
 
+                    if(playerScore == 10){
+                        openWinActivity();
+                    }
+                    if(computerScore == 10){
+                        openLoseActivity();
+                    }
+                    //counter
+                    counter = 0;
+                    new CountDownTimer(15000, 1000){
+                        public void onTick(long millisUntilFinished){
+                            textView.setText(String.valueOf(counter));
+                            counter++;
+                        }
+                        public  void onFinish(){
+                            textView.setText("FINISH!!");
+                        }
+                    }.start();
 
                 }
+
             });
+
+
         }
 
     }

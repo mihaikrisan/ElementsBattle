@@ -21,6 +21,7 @@ public enum Karten {
     Snake(11, "Grass", "snake11.jpg"),
     Apocalypse(7, "Fire", "apocalypse7.jpg");
 
+    //Variablen fur die Eigenschaften der Karte
     private int power;
     private String type;
     private String path;

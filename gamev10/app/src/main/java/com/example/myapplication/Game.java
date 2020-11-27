@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.media.Image;
 import android.os.CountDownTimer;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +21,8 @@ public class Game extends AppCompatActivity {
     private int playerScore;
     private TextView computerScoreView;
     private TextView playerScoreView;
-    public int counter;
+    private int counter;
+    private CountDownTimer countDownTimer;
 
     public int getRandomNumber() {
         Random random = new Random();
@@ -30,6 +33,7 @@ public class Game extends AppCompatActivity {
         Intent intent = new Intent(this, WinActivity.class);
         startActivity(intent);
     }
+
     public void openLoseActivity() {
         Intent intent = new Intent(this, LoseActivity.class);
         startActivity(intent);
@@ -147,7 +151,6 @@ public class Game extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,30 +185,54 @@ public class Game extends AppCompatActivity {
                     playerAssignedCards.remove(chosenPosition);
                     playerAssignedCards.add(chosenPosition, newDrawnCard);
 
-                    if(playerScore == 10){
+                    if (playerScore == 10) {
                         openWinActivity();
                     }
-                    if(computerScore == 10){
+                    if (computerScore == 10) {
                         openLoseActivity();
                     }
-                    //counter
-                    counter = 0;
-                    new CountDownTimer(15000, 1000){
-                        public void onTick(long millisUntilFinished){
-                            textView.setText(String.valueOf(counter));
-                            counter++;
-                        }
-                        public  void onFinish(){
-                            textView.setText("FINISH!!");
-                        }
-                    }.start();
 
+                    initialiseCounter(textView, playerCards);
                 }
-
             });
-
-
         }
 
+        counter = 15;
+
+        countDownTimer = new CountDownTimer(15000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                textView.setText(String.valueOf(counter));
+                counter--;
+            }
+
+            @Override
+            public void onFinish() {
+                playerCards.get(getRandomNumber() % 5).performClick();
+            }
+        };
+
+        countDownTimer.start();
+    }
+
+    private void initialiseCounter(final TextView textView, final ArrayList<ImageView> playerCards) {
+        counter = 15;
+
+        countDownTimer.cancel();
+
+        countDownTimer = new CountDownTimer(15000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                textView.setText(String.valueOf(counter));
+                counter--;
+            }
+
+            @Override
+            public void onFinish() {
+                playerCards.get(getRandomNumber() % 5).performClick();
+            }
+        };
+
+        countDownTimer.start();
     }
 }

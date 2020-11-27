@@ -11,6 +11,8 @@ public class LoseActivity extends AppCompatActivity {
 
     public void openWelcomeActivity() {
         Intent intent = new Intent(this, WelcomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivityIfNeeded(intent, 0);
         startActivity(intent);
     }
 

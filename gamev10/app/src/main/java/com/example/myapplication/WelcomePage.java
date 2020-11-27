@@ -144,9 +144,10 @@ public class WelcomePage extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-
+        mySong.stop();
         mySong.release();
+
+        super.onDestroy();
     }
 
 }

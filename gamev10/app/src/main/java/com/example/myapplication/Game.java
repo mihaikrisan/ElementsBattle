@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.Image;
@@ -11,6 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -186,9 +193,60 @@ public class Game extends AppCompatActivity {
                     playerAssignedCards.add(chosenPosition, newDrawnCard);
 
                     if (playerScore == 10) {
+
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        final DatabaseReference myRef = database.getReference("User");
+                        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                try {
+                                    for (DataSnapshot ds : snapshot.getChildren()) {
+                                        String username = ds.child("username").getValue(String.class);
+
+                                        if (getIntent().getStringExtra("USER_NAME").equals(username)) {
+                                            Integer nrWins = ds.child("nr_wins").getValue(Integer.class);
+
+                                            ds.child("nr_wins").getRef().setValue(++nrWins);
+                                        }
+                                    }
+                                } catch (Throwable e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
+
                         openWinActivity();
                     }
                     if (computerScore == 10) {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        final DatabaseReference myRef = database.getReference("User");
+                        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                try {
+                                    for (DataSnapshot ds : snapshot.getChildren()) {
+                                        String username = ds.child("username").getValue(String.class);
+
+                                        if (getIntent().getStringExtra("USER_NAME").equals(username)) {
+                                            Integer nrLosses = ds.child("nr_losses").getValue(Integer.class);
+
+                                            ds.child("nr_losses").getRef().setValue(++nrLosses);
+                                        }
+                                    }
+                                } catch (Throwable e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
+
                         openLoseActivity();
                     }
 

@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,19 +14,29 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class WelcomePage extends AppCompatActivity {
     MediaPlayer mySong;
     boolean soundOn = true;
+    Timer timer;
 
     public void openGameActivity() {
-        Intent intent = new Intent(this, Game.class);
-        startActivity(intent);
+        Intent i = new Intent(this, Game.class);
+        i.putExtra("USER_NAME", getIntent().getStringExtra("USER_NAME"));
+        startActivity(i);
     }
 
     public int getRandomNumber() {
@@ -35,8 +46,8 @@ public class WelcomePage extends AppCompatActivity {
 
     public boolean isPlaying = false;
 
-    private void startMusic(){
-        if(!isPlaying) {
+    private void startMusic() {
+        if (!isPlaying) {
             try {
                 mySong.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
@@ -72,12 +83,11 @@ public class WelcomePage extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void toggleSound(){
-        if(soundOn) {
+    public void toggleSound() {
+        if (soundOn) {
             mySong.pause();
             soundOn = false;
-        }
-        else {
+        } else {
             mySong.start();
             soundOn = true;
         }
@@ -85,8 +95,8 @@ public class WelcomePage extends AppCompatActivity {
     }
 
 
-    public void playSong(){
-        if(isPlaying)
+    public void playSong() {
+        if (isPlaying)
             mySong.reset();
         isPlaying = false;
         soundOn = true;
@@ -103,7 +113,7 @@ public class WelcomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         final String username = intent.getStringExtra("USER_NAME");
         Toast.makeText(WelcomePage.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
 
@@ -141,13 +151,51 @@ public class WelcomePage extends AppCompatActivity {
                 openProfileActivity(i);
             }
         });
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                final DatabaseReference myRef = database.getReference("User");
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        try {
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                String username = ds.child("username").getValue(String.class);
+
+
+
+                                if (intent.getStringExtra("USER_NAME").equals(username)) {
+                                    Integer totalTime = ds.child("total_time").getValue(Integer.class);
+
+                                    ds.child("total_time").getRef().setValue(++totalTime);
+                                }
+                            }
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+            }
+
+        }, 60000, 60000);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-
+        mySong.stop();
         mySong.release();
+
+        timer.cancel();
+
+        super.onDestroy();
     }
 
 }

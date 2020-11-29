@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 public enum Karten {
+    //Die Enumeration der Karten
     Cerberus(10, "Fire", "cerberus10.jpg"),
     Charmander(6, "Fire", "charmander6.jpg"),
     Deathwing(12, "Fire", "deathwing12.jpg"),
@@ -20,6 +21,7 @@ public enum Karten {
     Snake(11, "Grass", "snake11.jpg"),
     Apocalypse(7, "Fire", "apocalypse7.jpg");
 
+    //Variablen fur die Eigenschaften der Karte
     private int power;
     private String type;
     private String path;

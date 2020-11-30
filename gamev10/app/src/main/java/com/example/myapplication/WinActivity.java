@@ -11,9 +11,10 @@ public class WinActivity extends AppCompatActivity {
 
     public void openWelcomeActivity() {
         Intent intent = new Intent(this, WelcomePage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)  ;
         startActivityIfNeeded(intent, 0);
         startActivity(intent);
+        WinActivity.this.finish();
     }
 
     @Override

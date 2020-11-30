@@ -14,6 +14,7 @@ public class LoseActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityIfNeeded(intent, 0);
         startActivity(intent);
+        LoseActivity.this.finish();
     }
 
     @Override

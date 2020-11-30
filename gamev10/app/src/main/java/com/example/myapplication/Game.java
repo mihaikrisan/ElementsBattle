@@ -30,6 +30,7 @@ public class Game extends AppCompatActivity {
     private TextView playerScoreView;
     private int counter;
     private CountDownTimer countDownTimer;
+    private boolean finishGame = false;
 
     public int getRandomNumber() {
         Random random = new Random();
@@ -37,13 +38,21 @@ public class Game extends AppCompatActivity {
     }
 
     public void openWinActivity() {
+        finishGame = true;
+        countDownTimer.cancel();
         Intent intent = new Intent(this, WinActivity.class);
+        Game.this.finish();
         startActivity(intent);
+        Game.this.finish();
     }
 
     public void openLoseActivity() {
+        finishGame = true;
+        countDownTimer.cancel();
         Intent intent = new Intent(this, LoseActivity.class);
+        Game.this.finish();
         startActivity(intent);
+        Game.this.finish();
     }
 
     public Karten setCardImage(ImageView image) {
@@ -249,8 +258,8 @@ public class Game extends AppCompatActivity {
 
                         openLoseActivity();
                     }
-
-                    initialiseCounter(textView, playerCards);
+                    if(!finishGame)
+                        initialiseCounter(textView, playerCards);
                 }
             });
         }

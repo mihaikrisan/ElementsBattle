@@ -66,10 +66,16 @@ public class ProfileActivity extends AppCompatActivity {
                     TextView nrWinsTextView = findViewById(R.id.textViewNumberWins);
                     nrWinsTextView.setText("" + myUser.getNrWins());
 
+                    TextView nrLosesTextView = findViewById(R.id.textView3);
+                    nrLosesTextView.setText("" + myUser.getNrLosses());
+
                     TextView ratio = findViewById(R.id.textViewRatio);
                     if (myUser.getNrLosses() != 0) {
                         double wlRatio = (double) myUser.getNrWins() / (double) myUser.getNrLosses();
-                        ratio.setText("" + wlRatio);
+                        wlRatio*=100;
+                        double display = Math.round(wlRatio);
+                        display/=100;
+                        ratio.setText("" + display);
                     } else {
                         ratio.setText("" + myUser.getNrWins());
                     }

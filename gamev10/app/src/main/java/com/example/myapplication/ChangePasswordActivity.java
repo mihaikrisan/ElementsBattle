@@ -41,7 +41,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         final EditText newPassword2 = findViewById(R.id.newPassword2);
         Button submitBtn = findViewById(R.id.changeBtn);
 
-
+        //clicklistener
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

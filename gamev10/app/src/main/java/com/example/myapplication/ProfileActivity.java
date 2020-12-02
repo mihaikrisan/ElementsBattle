@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,13 +21,29 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    public void openChangePassActivity(Intent i){
+        startActivity(i);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         final String username = intent.getStringExtra("USER_NAME");
+
+        Button changePassBtn = findViewById(R.id.changeUsrBtn);
+
+        changePassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), ChangePasswordActivity.class);
+                i.putExtra("USER_NAME", username);
+                openChangePassActivity(i);
+            }
+        });
+
         Toast.makeText(ProfileActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();

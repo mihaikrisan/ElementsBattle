@@ -2,17 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gamebackground">
 
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Horizontal ScrollView Example"
-        android:id="@+id/textView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Horizontal ScrollView Example"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
     <LinearLayout
@@ -73,26 +74,24 @@
         android:layout_width="185dp"
         android:layout_height="201dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="150dp"
-         />
+        android:layout_marginTop="150dp" />
 
     <ImageView
         android:id="@+id/activePlayerCard"
         android:layout_width="185dp"
         android:layout_height="201dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="375dp"
-        />
+        android:layout_marginTop="375dp" />
 
     <TextView
+        android:id="@+id/textViewlower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Horizontal ScrollView Example"
-        android:id="@+id/textViewlower"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="700dp"/>
+        android:layout_marginTop="700dp"
+        android:text="Horizontal ScrollView Example"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/score"
@@ -137,9 +136,9 @@
         android:layout_marginTop="600dp">
 
         <HorizontalScrollView
+            android:id="@+id/horizontalScrollViewlower"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:id="@+id/horizontalScrollViewlower">
+            android:layout_height="100dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -149,28 +148,27 @@
                 <ImageView
                     android:id="@+id/lowercard3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     />
+                    android:layout_height="wrap_content" />
+
                 <ImageView
                     android:id="@+id/lowercard4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     />
+                    android:layout_height="wrap_content" />
+
                 <ImageView
                     android:id="@+id/lowercard5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     />
+                    android:layout_height="wrap_content" />
+
                 <ImageView
                     android:id="@+id/lowercard6"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     />
+                    android:layout_height="wrap_content" />
+
                 <ImageView
                     android:id="@+id/lowercard7"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </HorizontalScrollView>

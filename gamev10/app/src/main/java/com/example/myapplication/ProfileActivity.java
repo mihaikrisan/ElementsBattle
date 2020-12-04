@@ -25,6 +25,11 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void openChangeUsernameActivity(Intent i){
+        startActivity(i);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,17 @@ public class ProfileActivity extends AppCompatActivity {
                 Intent i = new Intent(getBaseContext(), ChangePasswordActivity.class);
                 i.putExtra("USER_NAME", username);
                 openChangePassActivity(i);
+            }
+        });
+
+        Button changeNameButton = findViewById(R.id.changeNameButton);
+
+        changeNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), ChangeUsernameActivity.class);
+                i.putExtra("USER_NAME", username);
+                openChangeUsernameActivity(i);
             }
         });
 

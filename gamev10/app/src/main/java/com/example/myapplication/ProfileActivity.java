@@ -59,9 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
                 openChangeUsernameActivity(i);
             }
         });
-
-        Toast.makeText(ProfileActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
-
+        
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("User");
         myRef.addValueEventListener(new ValueEventListener() {

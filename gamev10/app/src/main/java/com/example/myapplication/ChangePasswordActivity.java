@@ -34,7 +34,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         //get user from Toast
         final Intent intent = getIntent();
         final String username = intent.getStringExtra("USER_NAME");
-        Toast.makeText(ChangePasswordActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
 
         final EditText oldPassword = findViewById(R.id.oldPassword);
         final EditText newPassword = findViewById(R.id.newPassword);
